@@ -1,0 +1,410 @@
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #282c34;
+  padding: 1rem 2rem;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navItems {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.navItem {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.navItem:hover {
+  color: #61dafb;
+}
+
+.navItem:hover::after {
+  transform: scaleX(1);
+}
+
+
+/* Main Layout */
+.main {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 64px); /* Adjust for navbar height */
+}
+
+/* Sidebar */
+.sidebar {
+  width: 30%;
+  height: 100vh;
+  background-color: #f5f5f5;
+  padding: 1.5rem;
+  border-right: 1px solid #ddd;
+}
+
+.sidebarTitle {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.sidebarItems {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebarItem {
+  margin-bottom: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebarItem:hover {
+  background-color: #e0e0e0;
+}
+
+.active {
+  background-color: #61dafb;
+  color: white;
+}
+
+/* Content */
+.content {
+  width: 70%;
+  padding: 2rem;
+  background-color: #ffffff;
+}
+
+.wallet {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.iconeExpense {
+  display: flex;
+  justify-content: space-around;
+}
+
+.box {
+  width: 45%;
+  border: 2px solid green;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f0fff4;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.expenseBox {
+  border-color: red;
+  background-color: #fff5f5;
+}
+
+.inputContainer {
+  /* display: flex; */
+  /* align-items: center; */
+  gap: 1rem;
+  border: 2px solid orange;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.inputBoxContainer {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  /* justify-content: space-around; */
+  gap: 3rem;
+  position: relative;
+  /* width: 550px; */
+  background-color: #f4f4f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.5s ease-out;
+}
+
+
+.inputBox {
+  padding: 1rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  width: 30rem;
+  transition: box-shadow 0.3s ease;
+  border: 2px solid black;
+}
+
+.inputBox:focus {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+}
+
+.saveButton, .changeButton {
+  background-color: #61dafb;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.saveButton:hover, .changeButton:hover {
+  background-color: #21a1f1;
+}
+
+/* Transaction Section */
+.transactionSection {
+  margin: 2rem 0;
+  padding: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.inputGroup {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.inputGroup input,
+.inputGroup select {
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.inputGroup input:focus,
+.inputGroup select:focus {
+  border-color: #61dafb;
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+}
+
+.saveButton {
+  background-color: #61dafb;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.saveButton:hover {
+  background-color: #21a1f1;
+  transform: scale(1.05);
+}
+
+.historyList {
+  list-style: none;
+  padding: 0;
+}
+
+.historyItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.historyItem.increment {
+  color: green;
+}
+
+.historyItem.decrement {
+  color: red;
+}
+
+
+.saveButton,
+.resetButton {
+  cursor: pointer;
+  background-color: #61dafb;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  font-size: 1rem;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.saveButton:hover,
+.resetButton:hover {
+  background-color: #21a1f1;
+  transform: scale(1.05);
+}
+
+/* History Styling */
+.historyItem.increment {
+  color: green;
+}
+
+.historyItem.decrement {
+  color: red;
+}
+
+/* Transaction History Layout */
+.historyList {
+  list-style: none;
+  padding: 0;
+}
+
+.historyItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.date {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+/* dashborad */
+
+/* .chartContainer {
+  max-width: 400px; 
+  height: 400px; 
+}
+
+
+.smallChart {
+  width: 300px; 
+  height: 200px;
+}
+
+.barGraph {
+  height: 600px;
+  width: 30rem;
+}
+
+*/
+.graphChart {
+  display: flex;
+}
+
+.rightSidebar {
+  width: 20%;
+  height: 100vh;
+  padding: 20px;
+  background: #f8f9fa;
+  border-left: 2px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.scheduleForm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.scheduleInput {
+  width: 83%;
+  height: 60px;
+  margin: 15px 0;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.addButton {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.addButton:hover {
+  background: #0056b3;
+}
+
+.scheduleButton {
+  padding: 10px;
+  font-size: 16px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.scheduleButton:hover {
+  background: #45a049;
+}
+
+.scheduleList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.scheduleItem {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+/* Background overlay when form is open */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
