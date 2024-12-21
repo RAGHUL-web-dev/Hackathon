@@ -1,0 +1,514 @@
+.schemebot {
+  font-family: Arial, sans-serif;
+  background-color: black;
+  box-sizing: border-box;
+}
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    color: white;
+  }
+  
+  .navContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+  }
+  
+  .rightContent {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .navButton:hover {
+    transform: scale(1.1);
+  }
+  
+  .sideNav {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    height: 100%;
+    width: 250px;
+    background-color: #444;
+    color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    overflow-x: hidden;
+    transition: right 0.3s ease-in-out;
+  }
+  
+  .sideNav.open {
+    right: 0;
+  }
+  
+  .sideNavLinks {
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+  }
+  
+  .sideNavLinks li {
+    margin: 15px 0;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .closeButton {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .closeButton:hover {
+    transform: rotate(90deg);
+  }
+
+  .stickyInput{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    width: 50%;
+    max-width: 400px;
+    border: 2px solid #007bff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    transition: padding 0.3s ease, transform 0.3s ease;
+    background-color: black;
+    padding: 2rem;
+    border-radius: 50px;
+  }
+  
+  .stickyInput:focus { 
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    outline: none;
+    padding: 2rem;
+    border-radius: 50px;
+  }
+
+  .schemesTopicsContainer h1 {
+    position: absolute;
+    top: 5.7rem;
+    left: 40rem;
+    font-size: 2rem;
+    color: red;
+  }
+  .boxContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 boxes per row */
+    gap: 20px; /* Space between boxes */
+    padding: 100px 20px 50px; /* Top and bottom padding */
+    width: 96%; /* Full width */
+  
+
+  }
+  
+  .box {
+    padding: 20px;
+    text-align: center;
+    /* background-color: #ddd; */
+    color: #007bff;
+    border: 2px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  .box:hover {
+    background-color: #007bff;
+    color: black;
+    transform: scale(1.05);
+  }
+  
+  .fullContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    /* color: white; */
+    background-color: #fff;
+    width: 98%;
+    /* height: 100vh; */
+    text-align: center;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+  }
+  
+  .fullContent h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    /* color: red; */
+  }
+  
+  .fullContent p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .backButton {
+    padding: 10px 20px;
+    background-color: #5c6bc0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  .backButton:hover {
+    background-color: #3e4e92;
+  }
+
+  /* Help Box Styling */
+.helpBox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 150px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s, visibility 0.5s;
+  z-index: 1000;
+}
+
+.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.shrink {
+  animation: shrink-to-circle 1s forwards, move-to-bottom-right 1s forwards;
+}
+
+/* Animation to shrink the box into a circle */
+@keyframes shrink-to-circle {
+  0% {
+    width: 300px;
+    height: 100px;
+    border-radius: 10px;
+  }
+  100% {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+}
+
+/* Animation to move the circle to the bottom-right */
+@keyframes move-to-bottom-right {
+  0% {
+    transform: translate(-50%, -50%);
+    top: 20%;
+    left: 50%;
+  }
+  100% {
+    transform: none;
+    top: auto;
+    left: auto;
+    bottom: 40px;
+    right: 40px;
+    background-image: url("../images/schemebot.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 70px;
+    width: 70px;
+    cursor: pointer;
+  }
+}
+
+/* Continuous Animation for the Circle */
+/* .shrink {
+  animation: shrink-to-circle 1s forwards, move-to-bottom-right 1s forwards;
+} */
+
+/* .schemeBotImg {
+  background-image: url("../images/schemebot.jpg");
+  height: 90px;
+  width: 90px;
+  border-radius: 50px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-left: 7rem;
+} */
+
+.shrink p {
+  display: none; /* Hide the message once it shrinks */
+}
+
+/* .shrink::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+} */
+
+/* Pulse effect for the circle */
+@keyframes pulse {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+
+/* Additional styles for chat functionality */
+
+.chatBox {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 30%;
+  background-color: black ;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 1s ease-in-out;
+  z-index: 1000;
+}
+
+.chatHeader {
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.chatBubbleContainer {
+  max-height: 500px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.message {
+  padding: 10px;
+  border-radius: 15px;
+  margin: 5px;
+  word-wrap: break-word;
+  font-weight: bolder;
+}
+
+.user {
+  background-color: white;
+  color: black;
+  text-align: right;
+}
+
+.chatbot {
+  background-color: #007bff;
+  color: white;
+  text-align: left;
+}
+
+.chatInputContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatInput {
+  width: 80%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.chatSendButton {
+  background-color: #007bff;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.chatbotImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Typing Indicator */
+.typingIndicator {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background-color: #007bff;
+  border-radius: 50%;
+  animation: bounce 1.2s infinite ease-in-out;
+}
+
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.videoSection {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 10px;
+  width: 50rem;
+  /* height: 30rem; */
+  border-radius: 50px;
+}
+
+.videoSection video {
+  border-radius: 50px;
+  width: 100%; /* Makes the video responsive */
+  max-width: 100%; /* Prevents it from overflowing */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.faqSection {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 100rem; 
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.faqItem {
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.faqQuestion {
+  background-color: gray;
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.faqQuestion:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.faqAnswer {
+  display: none;
+  margin-top: 10px;
+  padding: 15px;
+  background-color: #f1f1f1;
+  border-left: 5px solid #007bff;
+  border-radius: 10px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.faqAnswer.show {
+  display: block;
+  max-height: 500px; /* Adjusted for smooth animation */
+  opacity: 1;
+}
+
+.faqItem:last-child {
+  margin-bottom: 0;
+}
+
+.faqSection h3 {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+b {
+  font-size: 2rem;
+}
+
+i {
+  font-weight: bolder;
+}
