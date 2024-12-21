@@ -53,16 +53,17 @@
 /* Sidebar */
 .sidebar {
   width: 30%;
-  height: 100vh;
-  background-color: #f5f5f5;
+  height: 130vh;
+  background-color: black;
+  color: white;
   padding: 1.5rem;
-  border-right: 1px solid #ddd;
+  border-right: 3px solid #ddd;
 }
 
 .sidebarTitle {
   margin-bottom: 1rem;
   font-size: 1.5rem;
-  color: #333;
+  color: #007bff;
 }
 
 .sidebarItems {
@@ -73,6 +74,7 @@
 .sidebarItem {
   margin-bottom: 1rem;
   cursor: pointer;
+  border: 2px solid white;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -84,14 +86,136 @@
 
 .active {
   background-color: #61dafb;
-  color: white;
+  color: black;
+  font-weight: bolder;
 }
+
+
+/* bot */
+.chatBox {
+  position: fixed;
+  bottom: 20px;
+  width: 20%;
+  background-color: black ;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+
+  /* z-index: 1000; */
+}
+
+.chatHeader {
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.chatBubbleContainer {
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.message {
+  padding: 10px;
+  border-radius: 15px;
+  margin: 5px;
+  word-wrap: break-word;
+  font-weight: bolder;
+  scrollbar-width: none;
+}
+
+.user {
+  background-color: white;
+  color: black;
+  text-align: right;
+}
+
+.chatbot {
+  background-color: #007bff;
+  color: white;
+  text-align: left;
+}
+
+.chatInputContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatInput {
+  width: 80%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.chatSendButton {
+  background-color: #007bff;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.chatbotImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+
+/* Typing Indicator */
+.typingIndicator {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background-color: #007bff;
+  border-radius: 50%;
+  animation: bounce 1.2s infinite ease-in-out;
+}
+
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 
 /* Content */
 .content {
   width: 70%;
   padding: 2rem;
-  background-color: #ffffff;
+}
+
+.content h2 {
+  color: #007bff;
 }
 
 .wallet {
@@ -132,6 +256,10 @@
   border: 2px solid orange;
   padding: 20px;
   border-radius: 8px;
+}
+
+.inputContainer button {
+  color: black;
 }
 
 .inputBoxContainer {
@@ -229,7 +357,16 @@
 
 .saveButton:hover {
   background-color: #21a1f1;
+  border: 2px solid black;
   transform: scale(1.05);
+}
+
+.history {
+  margin-top: 2rem;
+  height: 300px;
+  overflow: scroll;
+  scrollbar-width: none;
+  word-wrap: break-word;
 }
 
 .historyList {
@@ -270,6 +407,11 @@
   background-color: #21a1f1;
   transform: scale(1.05);
 }
+/* 
+.resetButton {
+  position: absolute;
+  bottom: 0rem;
+} */
 
 /* History Styling */
 .historyItem.increment {
@@ -317,16 +459,70 @@
 }
 
 */
-.graphChart {
+/* .graphChart {
   display: flex;
+} */
+
+
+.graphContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px; /* Adds spacing between the charts */
+  margin: 20px 0; /* Adds vertical spacing from other elements */
 }
+
+.chartBox {
+  flex: 1;
+  max-width: 400px; /* Maximum width of the container */
+  height: 400px; /* Fixed height for the container */
+  border: 1px solid #ccc; /* Optional: border for visuals */
+  border-radius: 8px; /* Optional: rounded corners */
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+  background-color: #fff; /* Background color */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center the charts */
+  overflow: hidden; /* Prevent charts from overflowing */
+}
+
+.chartBox canvas {
+  max-width: 100%; /* Make the chart canvas scale within the box */
+  max-height: 100%; /* Ensure the canvas height fits within the box */
+  width: 100%; /* Allow the chart to stretch fully horizontally */
+  height: 100%; /* Allow the chart to stretch fully vertically */
+  object-fit: contain; /* Ensures content fits nicely without distortion */
+}
+
+@media (max-width: 768px) {
+  .graphContainer {
+    flex-direction: column; /* Stacks charts vertically on small screens */
+  }
+
+  .chartBox {
+    max-width: 100%;
+    height: 300px; /* Reduce height for smaller screens */
+  }
+}
+
+.analysisMessage {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 5px;
+  border: 1px solid #f5c6cb;
+}
+
 
 .rightSidebar {
   width: 20%;
-  height: 100vh;
+  height: 131vh;
   padding: 20px;
-  background: #f8f9fa;
+  background: black;
   border-left: 2px solid #ddd;
+  color: white;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -390,6 +586,7 @@
 .scheduleList {
   list-style-type: none;
   padding: 0;
+  color: white;
 }
 
 .scheduleItem {
