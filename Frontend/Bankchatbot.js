@@ -2,18 +2,20 @@ import React from 'react'
 import { useState, useRef } from 'react';
 import styles from "../Styling/Bank.module.css"
 import {Link} from "react-router-dom";
+import * as pdfjsLib from 'pdfjs-dist';
 
 
 
 const Bankchatbot = () => {
 
-  const [prompt, setPrompt] = useState("");
-  const [displayPrompt, setDisplayPrompt] = useState("");
+  const [userQuestion, setUserQuestion] = useState('');
+    const [chatMessages, setChatMessages] = useState([]);
+    const [isTyping, setIsTyping] = useState(false);
   const [selectedPdf, setSelectedPdf] = useState(null);
-  const [pdfFile, setPdfFile] = useState(null);
+  const [pdfContent, setPdfContent] = useState('');
 
   const pdfList = [
-    { id: 1, name: "PDF Document 1", url: "./path/to/pdf2.pdf"},
+    { id: 1, name: "PDF Document 1", url: "/pdfContent/resume.pdf"},
     { id: 2, name: "PDF Document 2", url: "/path/to/pdf2.pdf" },
     { id: 3, name: "PDF Document 3", url: "/path/to/pdf3.pdf" },
     { id: 4, name: "PDF Document 4", url: "./path/to/pdf2.pdf"},
@@ -25,21 +27,72 @@ const Bankchatbot = () => {
     // Add more PDFs as needed
   ];
 
+  // Handle input change
   const handleInputChange = (e) => {
-    setPrompt(e.target.value);
+    setUserQuestion(e.target.value);
   };
 
-  const handlePromptSubmit = () => {
-    setDisplayPrompt(prompt);
-    setPrompt("");
+
+  // Handle send message
+  const handleSendMessage = () => {
+    if (userQuestion.trim()) {
+      // Add user question
+      setChatMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: 'user', text: userQuestion },
+      ]);
+
+       // Simulate chatbot response with typing animation
+       setIsTyping(true);
+       setTimeout(() => {
+         setChatMessages((prevMessages) => [
+           ...prevMessages,
+           { sender: 'chatbot', text: "I'm here to help!" },
+         ]);
+         setIsTyping(false);  // Stop typing animation
+       }, 4000); // Chatbot responds after 2 seconds
+ 
+       // Clear user input
+       setUserQuestion('');
+     }
   };
 
-  const handlePdfClick = (pdf) => {
-    setSelectedPdf(pdf); // Set the selected PDF
+  const handlePdfClick = async (pdf) => {
+    setSelectedPdf(pdf);
+    try {
+      const pdfContent = await extractPdfContent(pdf.url);
+      setPdfContent(pdfContent);
+    } catch (error) {
+      setPdfContent('Failed to load PDF content.');
+    }
   };
 
   const handleBackClick = () => {
     setSelectedPdf(null); // Clear the selected PDF
+    setPdfContent('');
+  };
+
+  const extractPdfContent = async (pdfUrl) => {
+    try {
+      console.log(`Loading PDF from: ${pdfUrl}`); // Debug log
+      const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+      console.log(`Loaded PDF with ${pdf.numPages} pages.`); // Debug log
+  
+      const numPages = pdf.numPages;
+      let textContent = '';
+  
+      for (let i = 1; i <= numPages; i++) {
+        const page = await pdf.getPage(i);
+        const text = await page.getTextContent();
+        text.items.forEach((item) => {
+          textContent += item.str + ' ';
+        });
+      }
+      return textContent;
+    } catch (error) {
+      console.error('Error loading PDF:', error);
+      throw new Error('Failed to load PDF content.');
+    }
   };
 
   return (
@@ -48,16 +101,18 @@ const Bankchatbot = () => {
         <div className={styles.logo}>BankApp</div>
         <div className={styles.navItems}>
           <span className={styles.username}>Username</span>
-          <Link to="/" style={{textDecoration:"none", color:"whiie"}}><span>Home</span></Link>
+          <Link to="/" className={styles.home}>
+            <span>Home</span>
+          </Link>
         </div>
       </nav>
       <div className={styles.content}>
         {/* Left Section */}
         <div className={styles.leftSection}>
-         {selectedPdf ? (
+          {selectedPdf ? (
             <>
               <h2 className={styles.sectionTitle}>{selectedPdf.name}</h2>
-              <p className={styles.pdfContent}>{selectedPdf.content}</p>
+              <div className={styles.pdfContent}>{pdfContent}</div>
               <button onClick={handleBackClick} className={styles.backButton}>
                 Back
               </button>
@@ -76,30 +131,52 @@ const Bankchatbot = () => {
                   </li>
                 ))}
               </ul>
+              {selectedPdf && (
+        <div>
+          <h2>{selectedPdf.name}</h2>
+          <p>{pdfContent}</p>
+        </div>
+      )}
             </>
           )}
         </div>
         {/* Right Section */}
-        <div className={styles.rightSection}>
-          <div className={styles.promptDisplay}>
-            {displayPrompt ? <p className={styles.promptText}>{displayPrompt}</p> : "Your prompt will appear here..."}
+        <div className={styles.chatBox}>
+          <div className={styles.chatHeader}>
+            <div className={styles.chatBubbleContainer}>
+              {chatMessages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`${styles.message} ${styles[message.sender]}`}
+                >
+                  {message.text}
+                </div>
+              ))}
+              {isTyping && (
+                <div className={styles.typingIndicator}>
+                  <span className={styles.dot}></span>
+                  <span className={styles.dot}></span>
+                  <span className={styles.dot}></span>
+                </div>
+              )}
+            </div>
           </div>
-          <div className={styles.promptInput}>
+          <div className={styles.chatInputContainer}>
             <input
               type="text"
-              value={prompt}
+              value={userQuestion}
               onChange={handleInputChange}
-              className={styles.inputField}
-              placeholder="Enter your prompt..."
+              className={styles.chatInput}
+              placeholder="Ask a question..."
             />
-            <button onClick={handlePromptSubmit} className={styles.submitButton}>
-              Submit
+            <button onClick={handleSendMessage} className={styles.chatSendButton}>
+              Send
             </button>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Bankchatbot
